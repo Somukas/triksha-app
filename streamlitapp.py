@@ -1,4 +1,4 @@
-app_py = """
+
 import streamlit as st
 import random, time, pandas as pd
 st.set_page_config(
