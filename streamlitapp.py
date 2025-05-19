@@ -1,47 +1,46 @@
 app_py = """
 import streamlit as st
 import random, time, pandas as pd
-
+# Page config
 st.set_page_config(
     page_title="Triksha Health Insights",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# <-- st.markdown must start at column 1
-st.markdown("""
-<style>
+# === CSS INJECTION ===
+st.markdown("""<style>
 /* overall background */
 .css-18e3th9, .css-1v3fvcr {
-background-color: #ffffff !important;
+  background-color: #ffffff !important;
 }
 /* sidebar background */
 .css-1v3fvcr {
-background-color: #1f77b4 !important;
+  background-color: #1f77b4 !important;
 }
 /* widget boxes */
 .css-1kyxreq {
-background-color: #f0f2f6 !important;
+  background-color: #f0f2f6 !important;
 }
 /* headings & buttons */
 h1, h2, h3, .st-bt {
-color: #1f77b4 !important;
+  color: #1f77b4 !important;
 }
 /* status text levels */
 .status-ok {
-color: #1f77b4 !important;
-font-weight: bold;
+  color: #1f77b4 !important;
+  font-weight: bold;
 }
 .status-warning {
-color: #ff7f0e !important;
-font-weight: bold;
+  color: #ff7f0e !important;
+  font-weight: bold;
 }
 .status-critical {
-color: #d62728 !important;
-font-weight: bold;
+  color: #d62728 !important;
+  font-weight: bold;
 }
-</style>
-""", unsafe_allow_html=True)
+</style>""", unsafe_allow_html=True)
+
 
 def status_line(msg, level):
     cls = {"ok":"status-ok","warning":"status-warning","critical":"status-critical"}[level]
