@@ -1,5 +1,4 @@
-%%bash
-cat > app.py << 'EOF'
+app_py = """
 import streamlit as st
 import random, time, pandas as pd
 
@@ -103,4 +102,5 @@ PAGES = {
 st.sidebar.title("📋 Navigation")
 choice = st.sidebar.selectbox("Go to", list(PAGES))
 PAGES[choice]()
-EOF
+with open("app.py","w") as f:
+    f.write(app_py)
