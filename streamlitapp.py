@@ -10,9 +10,8 @@ st.set_page_config(
 )
 
 # ——— Inject white & blue theme + status colors ———
-st.markdown(
-    """
-    <style>
+st.markdown("""
+<style>
       /* overall background */
       .css-18e3th9, .css-1v3fvcr {
         background-color: #ffffff !important;
