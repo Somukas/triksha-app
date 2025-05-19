@@ -10,39 +10,40 @@ st.set_page_config(
 )
 
 # ——— Inject white & blue theme + status colors ———
-st.markdown("""
-<style>
-  /* overall background */
-  .css-18e3th9, .css-1v3fvcr {
-    background-color: #ffffff !important;
-  }
-  /* sidebar background */
-  .css-1v3fvcr {
-    background-color: #1f77b4 !important;
-  }
-  /* widget boxes */
-  .css-1kyxreq {
-    background-color: #f0f2f6 !important;
-  }
-  /* headings & buttons */
-  h1, h2, h3, .st-bt {
-    color: #1f77b4 !important;
-  }
-  /* status text levels */
-  .status-ok {
-    color: #1f77b4 !important;  /* blue */
-    font-weight: bold;
-  }
-  .status-warning {
-    color: #ff7f0e !important;  /* orange */
-    font-weight: bold;
-  }
-  .status-critical {
-    color: #d62728 !important;  /* red */
-    font-weight: bold;
-  }
-</style>
-    """,
+st.markdown(
+    """
+    <style>
+      /* overall background */
+      .css-18e3th9, .css-1v3fvcr {
+        background-color: #ffffff !important;
+      }
+      /* sidebar background */
+      .css-1v3fvcr {
+        background-color: #1f77b4 !important;
+      }
+      /* widget boxes */
+      .css-1kyxreq {
+        background-color: #f0f2f6 !important;
+      }
+      /* headings & buttons */
+      h1, h2, h3, .st-bt {
+        color: #1f77b4 !important;
+      }
+      /* status text levels */
+      .status-ok {
+        color: #1f77b4 !important;  /* blue */
+        font-weight: bold;
+      }
+      .status-warning {
+        color: #ff7f0e !important;  /* orange */
+        font-weight: bold;
+      }
+      .status-critical {
+        color: #d62728 !important;  /* red */
+        font-weight: bold;
+      }
+    </style>
+    """,  # <-- Make sure these quotes close the string
     unsafe_allow_html=True
 )
 
