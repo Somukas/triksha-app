@@ -2,16 +2,15 @@ app_py = """
 import streamlit as st
 import random, time, pandas as pd
 
-# ——— Page config ———
+# 1) Page config — no indent
 st.set_page_config(
     page_title="Triksha Health Insights",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# ——— Inject white & blue theme + status colors ———
-st.markdown(
-    """
+# 2) CSS injection — st.markdown must start at column 1
+st.markdown("""
     <style>
       /* overall background */
       .css-18e3th9, .css-1v3fvcr {
@@ -31,21 +30,19 @@ st.markdown(
       }
       /* status text levels */
       .status-ok {
-        color: #1f77b4 !important;  /* blue */
+        color: #1f77b4 !important;
         font-weight: bold;
       }
       .status-warning {
-        color: #ff7f0e !important;  /* orange */
+        color: #ff7f0e !important;
         font-weight: bold;
       }
       .status-critical {
-        color: #d62728 !important;  /* red */
+        color: #d62728 !important;
         font-weight: bold;
       }
     </style>
-    """,  # <-- Make sure these quotes close the string
-    unsafe_allow_html=True
-)
+""", unsafe_allow_html=True)
 
 # ——— Helper for colored status ———
 def status_line(msg, level):
