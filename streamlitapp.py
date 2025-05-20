@@ -1,3 +1,6 @@
+# Re-saving the updated Streamlit app code due to kernel reset
+
+updated_code = '''
 import streamlit as st
 import random, time, pandas as pd
 
@@ -14,6 +17,10 @@ st.markdown("""
         color: #1f77b4;
         font-size: 36px;
         font-weight: bold;
+        margin-bottom: 0.5em;
+    }
+    .stMarkdown h3 {
+        margin-top: 0.5em;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -33,29 +40,31 @@ def simulate_vital(name, unit, lo, hi, threshold=None):
     data = []
     chart = st.empty()
     info = st.empty()
-    for _ in range(50):
-        v = round(random.uniform(lo, hi), 2)
-        data.append(v)
-        chart.line_chart(pd.DataFrame(data, columns=[name]))
-        with info.container():
-            st.subheader("🔍 Insights")
-            if threshold:
-                if v > threshold:
-                    lvl, msg = "critical", f"⚠️ {name} high ({v}{unit})"
-                elif v > threshold * 0.8:
-                    lvl, msg = "warning", f"🟠 {name} nearing ({v}{unit})"
+    v_input = st.number_input(f"Manual {name} input ({unit.strip()})", min_value=lo, max_value=hi, value=(lo+hi)//2.0, step=1.0)
+    if st.button("Start Simulation"):
+        for _ in range(50):
+            v = round(random.uniform(lo, hi), 2)
+            data.append(v)
+            chart.line_chart(pd.DataFrame(data, columns=[name]))
+            with info.container():
+                st.subheader("🔍 Insights")
+                if threshold:
+                    if v > threshold:
+                        lvl, msg = "critical", f"⚠️ {name} high ({v}{unit})"
+                    elif v > threshold * 0.8:
+                        lvl, msg = "warning", f"🟠 {name} nearing ({v}{unit})"
+                    else:
+                        lvl, msg = "ok", f"✔️ {name} OK ({v}{unit})"
                 else:
-                    lvl, msg = "ok", f"✔️ {name} OK ({v}{unit})"
-            else:
-                lvl, msg = "ok", f"✔️ {name}: {v}{unit}"
-            status_line(msg, lvl)
-            if lvl == "critical":
-                st.write("• Reason: Exceeds safe range\n• Consensus: Multiple high readings\n• Trend: Rising")
-            elif lvl == "warning":
-                st.write("• Reason: Near upper bound\n• Trend: Slightly rising")
-            else:
-                st.write("• Trend: Stable")
-        time.sleep(0.1)
+                    lvl, msg = "ok", f"✔️ {name}: {v}{unit}"
+                status_line(msg, lvl)
+                if lvl == "critical":
+                    st.write("• Reason: Exceeds safe range\n• Consensus: Multiple high readings\n• Trend: Rising")
+                elif lvl == "warning":
+                    st.write("• Reason: Near upper bound\n• Trend: Slightly rising")
+                else:
+                    st.write("• Trend: Stable")
+            time.sleep(0.1)
 
 # ——— Pages ———
 def home():
@@ -63,13 +72,11 @@ def home():
     st.markdown("### Welcome to Triksha")
     st.write("AI-powered real-time vital monitoring.")
     st.write("---")
-    
+
     age = st.slider("Age", 1, 100, 45)
-    
     gender = st.selectbox("Gender", ["Male", "Female", "Other"])
     age_group = st.selectbox("Age Group", ["Child", "Adult", "Senior"])
     athlete_status = st.selectbox("Athlete Status", ["Athlete", "Non-Athlete"])
-    
     category = st.selectbox("Category", ["Diabetic", "Cardiac", "Respiratory", "General"])
     activity = st.selectbox("Activity Level", ["Resting", "Active"])
 
@@ -84,21 +91,22 @@ def bp():
     sys, dia = [], []
     ch = st.empty()
     inf = st.empty()
-    for _ in range(50):
-        s, d = round(random.uniform(100, 180), 2), round(random.uniform(60, 100), 2)
-        sys.append(s)
-        dia.append(d)
-        ch.line_chart(pd.DataFrame({"Systolic": sys, "Diastolic": dia}))
-        with inf.container():
-            st.subheader("🔍 Insights")
-            if s > 140 or d > 90:
-                status_line(f"⚠️ BP high: {s}/{d}", "critical")
-            elif s > 112 or d > 72:
-                status_line(f"🟠 BP near: {s}/{d}", "warning")
-            else:
-                status_line(f"✔️ BP OK: {s}/{d}", "ok")
-            st.write("• Trend:", "Rising" if s > 140 or d > 90 else "Stable")
-        time.sleep(0.1)
+    if st.button("Start BP Simulation"):
+        for _ in range(50):
+            s, d = round(random.uniform(100, 180), 2), round(random.uniform(60, 100), 2)
+            sys.append(s)
+            dia.append(d)
+            ch.line_chart(pd.DataFrame({"Systolic": sys, "Diastolic": dia}))
+            with inf.container():
+                st.subheader("🔍 Insights")
+                if s > 140 or d > 90:
+                    status_line(f"⚠️ BP high: {s}/{d}", "critical")
+                elif s > 112 or d > 72:
+                    status_line(f"🟠 BP near: {s}/{d}", "warning")
+                else:
+                    status_line(f"✔️ BP OK: {s}/{d}", "ok")
+                st.write("• Trend:", "Rising" if s > 140 or d > 90 else "Stable")
+            time.sleep(0.1)
 
 def glucose():      st.title("🧃 Glucose");            simulate_vital("Glucose", " mg/dL", 70, 200, 140)
 def temp():         st.title("🌡️ Temperature");       simulate_vital("Body Temperature", " °C", 36, 39.5, 37.5)
@@ -116,3 +124,4 @@ PAGES = {
 st.sidebar.title("📋 Navigation")
 page = st.sidebar.selectbox("Go to", list(PAGES.keys()))
 PAGES[page]()
+
