@@ -38,7 +38,13 @@ def simulate_vital(name, unit, lo, hi, threshold=None):
     data = []
     chart = st.empty()
     info = st.empty()
-    v_input = st.number_input(f"Manual {name} input ({unit.strip()})", min_value=lo, max_value=hi, value=(lo+hi)//2.0, step=1.0)
+    v_input = st.number_input(
+    f"Manual {name} input ({unit.strip()})",
+    min_value=float(lo),
+    max_value=float(hi),
+    value=round((lo + hi) / 2, 2),
+    step=0.1
+)
     if st.button("Start Simulation"):
         for _ in range(50):
             v = round(random.uniform(lo, hi), 2)
