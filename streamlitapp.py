@@ -1,6 +1,4 @@
-# Re-saving the updated Streamlit app code due to kernel reset
 
-updated_code = '''
 import streamlit as st
 import random, time, pandas as pd
 
